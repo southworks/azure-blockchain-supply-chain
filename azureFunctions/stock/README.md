@@ -1,4 +1,4 @@
-﻿# Supplier API
+﻿# Stock API
 
 Here is the API endpoints documentation for Stock contract.
 
