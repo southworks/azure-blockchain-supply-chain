@@ -1,0 +1,969 @@
+{
+	"info": {
+		"_postman_id": "176fb520-dfd8-4237-8938-3f127aaefd59",
+		"name": "Consumer",
+		"description": "Profile API endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{Ocp-Apim-Subscription-Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"username\",\r\n    \"email\":\"user@email.com\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/CreateUser",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"CreateUser"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This is a post request which creates an order in the retailer contract. Using item ids from the stock contract The response should return the order's id."
+			},
+			"response": []
+		},
+		{
+			"name": "GetUserProfile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"{{userId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/GetUserProfile",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"GetUserProfile"
+					]
+				},
+				"description": "This is a post request which gets a specific order's status by the order's id. The response will return an object with the status number and the label of the status."
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUserProfile",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"{{userId}}\",\r\n    \"name\":\"myNameUpdates\",\r\n    \"email\":\"UpdatedTest@test.com\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/UpdateUserProfile",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"UpdateUserProfile"
+					]
+				},
+				"description": "This is a post requests that updates the stock contract by passing it a new contract address."
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUser",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"userId\": \"{{userId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/DeleteUser",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"DeleteUser"
+					]
+				},
+				"description": "This is a post request which cancels an order by setting the order status to \"Cancelled\" only if the the order status is \"New\" and if the client that made the order is the one to cancel it."
+			},
+			"response": []
+		},
+		{
+			"name": "GetItem",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":0,\r\n    \"contractAddress\": \"{{stock-contract-address}}\",\r\n    \"userId\": \"{{userId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/GetItem",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"GetItem"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "A post request which gets the item's details by it's id. The response should return the item's name, description, category and stock."
+			},
+			"response": [
+				{
+					"name": "GetItem",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":4,\r\n    \"contractAddress\": \"{{stock-contract-address}}\",\r\n    \"userId\": \"{userId}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/consumer/GetItem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"consumer",
+								"GetItem"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "180"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:80db7c4e-3522-4edf-964f-2157fe925c09"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-314?sv=2018-03-28&sr=b&sig=3mtTbcrlu7K2qsImx8BycUC%2BqubgmQcfdoexVXqLHV8%3D&se=2020-10-10T17%3A42%3A13Z&sp=r&traceId=94e42a9c9b204d9289e6143a831e53d8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:42:13 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"name\": \"nameExample\",\n    \"description\": \"description\",\n    \"category\": \"categoryName\",\n    \"stock\": 490\n        \"userId\": \"{userId}\"\r\n        \"password\": \"{password}\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "GetItemStock",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":0,\r\n    \"contractAddress\": \"{{stock-contract-address}}\",\r\n    \"userId\": \"{{userId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/GetItemStock",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"GetItemStock"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This is a post request which gets the item's stock by it's item id and should return the stock amount."
+			},
+			"response": [
+				{
+					"name": "GetItemStock",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":3,\r\n    \"contractAddress\": \"{{stock-contract-address}}\",\r\n    \"userId\": \"{userId}\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/consumer/GetItemStock",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"consumer",
+								"GetItemStock"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:80db7c4e-3522-4edf-964f-2157fe925c09"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-315?sv=2018-03-28&sr=b&sig=GW%2FRxZcjwNmXiKpT5fBtiHsV7JseU%2FJVddu2n%2FYOMwk%3D&se=2020-10-10T17%3A43%3A13Z&sp=r&traceId=9d6ed32eed254a128d8acf8c10d9573b"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:43:13 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "480"
+				}
+			]
+		},
+		{
+			"name": "CancelOrder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\":5,\r\n    \"contractAddress\": \"{{retailer-contract-address}}\",\r\n    \"userId\": \"{{userId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/CancelOrder",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"CancelOrder"
+					]
+				},
+				"description": "This is a post request which cancels an order by setting the order status to \"Cancelled\" only if the the order status is \"New\" and if the client that made the order is the one to cancel it."
+			},
+			"response": [
+				{
+					"name": "CancelOrder",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderId\":5,\r\n    \"contractAddress\":  \"{{retailer-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/consumer/CancelOrder",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"consumer",
+								"CancelOrder"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:883b2a10-45ef-4921-bbd6-4591d7b5cb01"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=c21931057f7032b90fc13a9a64998792e2c84a2242dc975345122b506def5c0b;Path=/;HttpOnly;Domain=retailer.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-303?sv=2018-03-28&sr=b&sig=Pp99qQ%2FAOpYYw0vND7KmaFFg2Qmwc%2Fo%2F%2BwC7P%2F%2FNH%2Bs%3D&se=2020-10-10T17%3A34%3A53Z&sp=r&traceId=784075722dfa4d658f66fc6976fd51c3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:34:53 GMT"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "GetOrderStatus",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\":0,\r\n    \"contractAddress\": \"{{retailer-contract-address}}\",\r\n    \"userId\": \"{{userId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/GetOrderStatus",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"GetOrderStatus"
+					]
+				},
+				"description": "This is a post request which gets a specific order's status by the order's id. The response will return an object with the status number and the label of the status."
+			},
+			"response": [
+				{
+					"name": "GetOrderStatus",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderId\":5,\r\n    \"contractAddress\":  \"{{retailer-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/consumer/GetOrderStatus",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"consumer",
+								"GetOrderStatus"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:883b2a10-45ef-4921-bbd6-4591d7b5cb01"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=c21931057f7032b90fc13a9a64998792e2c84a2242dc975345122b506def5c0b;Path=/;HttpOnly;Domain=retailer.azurewebsites.net"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=183f2ba13604fc2a7264b82924c56ebb1396782a26bfb46d9ef785631c762248;Path=/;HttpOnly;Domain=retailer.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-299?sv=2018-03-28&sr=b&sig=taypFHMen8k62YG%2BuQW7qkjE28skUKXrYLi9WyGakdk%3D&se=2020-10-10T17%3A31%3A22Z&sp=r&traceId=f53772cc2809415b81c1d1aa61cf9a8e"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:31:21 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 1,\n    \"details\": \"New\"\n}"
+				}
+			]
+		},
+		{
+			"name": "CreateOrder",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{Ocp-Apim-Subscription-Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n     \"itemIds\": [0],\r\n     \"itemQuantities\": [10],\r\n     \"contractAddress\": \"{{retailer-contract-address}}\",\r\n     \"userId\": \"{{userId}}\"\r\n  }"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/CreateOrder",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"CreateOrder"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This is a post request which creates an order in the retailer contract. Using item ids from the stock contract The response should return the order's id."
+			},
+			"response": [
+				{
+					"name": "CreateOrder",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{Ocp-Apim-Subscription-Key}}",
+								"type": "text"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"value": "{{Ocp-Apim-Trace}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\n \t\"itemIds\":[4],\n \t\"itemQuantities\":[10],\n \t\"contractAddress\":\"{{retailer-contract-address}}\",\n \t\"userId\": \"{{userId}}\"\n }"
+						},
+						"url": {
+							"raw": "{{base_url}}/consumer/CreateOrder",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"consumer",
+								"CreateOrder"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:883b2a10-45ef-4921-bbd6-4591d7b5cb01"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=c21931057f7032b90fc13a9a64998792e2c84a2242dc975345122b506def5c0b;Path=/;HttpOnly;Domain=retailer.azurewebsites.net"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=183f2ba13604fc2a7264b82924c56ebb1396782a26bfb46d9ef785631c762248;Path=/;HttpOnly;Domain=retailer.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-296?sv=2018-03-28&sr=b&sig=aZlnSW6fAnWGgXVZ9lHwRCYkP8%2FJMLaw9%2FAabeB036s%3D&se=2020-10-10T17%3A29%3A29Z&sp=r&traceId=0ce28fad05524a56874a2eef32845d94"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:29:34 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "     \"userId\": \"{{userId}}\"6"
+				}
+			]
+		},
+		{
+			"name": "ConfirmDelivery",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{Ocp-Apim-Subscription-Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"orderId\":3,\r\n    \"contractAddress\": \"{{retailer-contract-address}}\",\r\n    \"userId\": \"{{userId}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/consumer/ConfirmDelivery",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"consumer",
+						"ConfirmDelivery"
+					]
+				},
+				"description": "This is a post request which confirms an order by setting the order status to \"Delivered\", this can only happen by th client who placed the order and if the order status is set to \"inTransit\"."
+			},
+			"response": [
+				{
+					"name": "ConfirmDelivery",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{Ocp-Apim-Subscription-Key}}",
+								"type": "text"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"value": "true",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderId\":4,\r\n    \"contractAddress\":  \"{{retailer-contract-address}}\",\r\n    \"userId\": \"{{userId}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/consumer/ConfirmDelivery",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"consumer",
+								"ConfirmDelivery"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:883b2a10-45ef-4921-bbd6-4591d7b5cb01"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=c21931057f7032b90fc13a9a64998792e2c84a2242dc975345122b506def5c0b;Path=/;HttpOnly;Domain=retailer.azurewebsites.net"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=183f2ba13604fc2a7264b82924c56ebb1396782a26bfb46d9ef785631c762248;Path=/;HttpOnly;Domain=retailer.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-306?sv=2018-03-28&sr=b&sig=8Y57ewE4poEl33l86qQssh2Yf44IjIsaBLxmM3vzy1Q%3D&se=2020-10-10T17%3A37%3A37Z&sp=r&traceId=dd7e8930465b49f289e53a9d8226ced1"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:37:37 GMT"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "2310c50e-a4b6-4766-ba69-7167e3edbd6f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "e216123d-7138-403e-9120-86be3c8c6023",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "58a08481-d575-4aca-9b1b-cface884480f",
+			"key": "base_url",
+			"value": "url",
+			"type": "string"
+		},
+		{
+			"id": "b144ee94-a1aa-4efa-b3d9-6aee33d6969d",
+			"key": "Ocp-Apim-Subscription-Key",
+			"value": "subscription key",
+			"type": "string"
+		},
+		{
+			"id": "fbc37f44-a925-4c2b-be29-eb50edd7a36e",
+			"key": "userId",
+			"value": "userId",
+			"type": "string"
+		},
+		{
+			"id": "e1e073f8-adc0-4d9e-ad92-394cae2a6940",
+			"key": "stock-contract-address",
+			"value": "stock contract address",
+			"type": "string"
+		},
+		{
+			"id": "a7f697fe-af01-4dc0-b3b3-c43bcdd44885",
+			"key": "retailer-contract-address",
+			"value": "retailer contract address",
+			"type": "string"
+		}
+	]
+}

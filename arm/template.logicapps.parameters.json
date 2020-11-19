@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "connectionsDocumentdbName": {
+            "value": "" //Fill in parameter value
+        },
+        "connectionsAzureeventgridName": {
+            "value": "" //Fill in parameter value
+        },
+        "connectionsOffice365Name": {
+            "value": "" //Fill in parameter value
+        },
+        "workflowsConsortiumEventsName": {
+            "value": "" //Fill in parameter value
+        },
+        "workflowsEmailNotificationTriggerName": {
+            "value": "" //Fill in parameter value
+        },
+        "databaseName": {
+            "value": "" //Fill in parameter value
+        },
+        "collectionName": {
+            "value": "" //Fill in parameter value
+        },
+        "databaseAccountName": {
+            "value": "" //Fill in parameter value
+        },
+        "databaseResourceName": {
+            "value": "" //Fill in parameter value
+        },
+        "location": {
+            "value": "" //Fill in parameter value
+        }
+    }
+}

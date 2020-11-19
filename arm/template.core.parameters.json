@@ -1,0 +1,69 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appName": {
+            "value": "" //Fill in parameter value
+        },
+        "storageAccountType": {
+            "value": "" //Fill in parameter value
+        },
+        "location": {
+            "value": "" //Fill in parameter value
+        },
+        "memberName": {
+            "value": "" //Fill in parameter value
+        },
+        "consortiumName": {
+            "value": "" //Fill in parameter value
+        },
+        "memberPassword": {
+            "value": "" //Fill in parameter value
+        },
+        "consortiumManagementAccountPassword": {
+            "value": "" //Fill in parameter value
+        },
+        "apimPublisherEmail": {
+            "value": "" //Fill in parameter value
+        },
+        "apimPublisherName": {
+            "value": "" //Fill in parameter value
+        },
+        "accountName": {
+            "value": "" //Fill in parameter value
+        },
+        "primaryRegion": {
+            "value": "" //Fill in parameter value
+        },
+        "secondaryRegion": {
+            "value": "" //Fill in parameter value
+        },
+        "defaultConsistencyLevel": {
+            "value": "" //Fill in parameter value
+        },
+        "maxStalenessPrefix": {
+            "value": 100000
+        },
+        "maxIntervalInSeconds": {
+            "value": 300
+        },
+        "automaticFailover": {
+            "value": true
+        },
+        "databaseName": {
+            "value": "" //Fill in parameter value
+        },
+        "consumerContainerName": {
+            "value": "" //Fill in parameter value
+        },
+        "walletsContainerName": {
+            "value": "" //Fill in parameter value
+        },
+        "messagesContainerName": {
+            "value": "" //Fill in parameter value
+        },
+        "throughput": {
+            "value": 400
+        }
+    }
+}

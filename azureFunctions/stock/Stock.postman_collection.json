@@ -1,0 +1,870 @@
+{
+	"info": {
+		"_postman_id": "8d4d9add-346a-4510-9629-0181024eb9c6",
+		"name": "Stock",
+		"description": "Stock API enpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CreateItem",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"value": "{{Ocp-Apim-Subscription-Key}}",
+						"type": "text"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"value": "true",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"category\":  \"categoryName\",\r\n        \"description\": \"description\",\r\n        \"name\": \"nameExample\",\r\n        \"stock\": 500,\r\n        \"contractAddress\":\"{{stock-contract-address}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/stock/CreateItem",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"stock",
+						"CreateItem"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				},
+				"description": " A post request which creates an item in the stock contract. The response should return the item id."
+			},
+			"response": [
+				{
+					"name": "CreateItem",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"value": "{{Ocp-Apim-Subscription-Key}}",
+								"type": "text"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"value": "true",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"category\":  \"categoryName\",\r\n        \"description\": \"description\",\r\n        \"name\": \"nameExample\",\r\n        \"stock\": 500,\r\n        \"contractAddress\": \"{{stock-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/stock/CreateItem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stock",
+								"CreateItem"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "gzip"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-313?sv=2018-03-28&sr=b&sig=LNH4bi1PMu3gJekLYC%2FFpoiwkQRCK%2FhnRx1NjzwbGak%3D&se=2020-10-10T17%3A41%3A26Z&sp=r&traceId=3e02bd763f0b4c27bae3a38289da8160"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:41:35 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "7"
+				}
+			]
+		},
+		{
+			"name": "RemoveItem",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":4,\r\n    \"contractAddress\": \"{{stock-contract-address}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/stock/RemoveItem",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"stock",
+						"RemoveItem"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This is a post request which removes an item specified by the item id."
+			},
+			"response": [
+				{
+					"name": "RemoveItem",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":4,\r\n    \"contractAddress\": \"{{stock-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/stock/RemoveItem",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stock",
+								"RemoveItem"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:80db7c4e-3522-4edf-964f-2157fe925c09"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-316?sv=2018-03-28&sr=b&sig=X0A4c%2FthZaN0POTB0cy%2F0vn2Nwgi4E6hOU2uDYMdBE8%3D&se=2020-10-10T17%3A43%3A57Z&sp=r&traceId=0d2310e3485a4217bc606c8ab74c94da"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:43:56 GMT"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "IncreaseItemStock",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"amount\":20,\r\n    \"contractAddress\":\"{{stock-contract-address}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/stock/IncreaseItemStock",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"stock",
+						"IncreaseItemStock"
+					]
+				},
+				"description": "This is a post request which allows you to increase the stock amount on an item specified by the item id."
+			},
+			"response": [
+				{
+					"name": "IncreaseItemStock",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"amount\":20,\r\n    \"contractAddress\": \"{{stock-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/stock/IncreaseItemStock",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stock",
+								"IncreaseItemStock"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:80db7c4e-3522-4edf-964f-2157fe925c09"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-317?sv=2018-03-28&sr=b&sig=x2ah1hJ%2BcepGezrjdsPGHcdZLn%2BfQmOi1mlTOO3jIX0%3D&se=2020-10-10T17%3A44%3A50Z&sp=r&traceId=0793e31c456743b298df6739432c8120"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:44:50 GMT"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "DecreaseItemStock",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":3,\r\n    \"amount\":20,\r\n    \"contractAddress\":\"{{stock-contract-address}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/stock/DecreaseItemStock",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"stock",
+						"DecreaseItemStock"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This is a post request which allows you to decrease the stock amount on an item specified by the item id."
+			},
+			"response": [
+				{
+					"name": "DecreaseItemStock",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":3,\r\n    \"amount\":20,\r\n    \"contractAddress\": \"{{stock-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/stock/DecreaseItemStock",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stock",
+								"DecreaseItemStock"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:80db7c4e-3522-4edf-964f-2157fe925c09"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-319?sv=2018-03-28&sr=b&sig=Y35fseJg2QDJf0QzTpq45zXmI0bY8hxI03ltsf2jZzs%3D&se=2020-10-10T17%3A45%3A30Z&sp=r&traceId=1f0c11467dc749db9e6764570e46361b"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:45:31 GMT"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "UpdateItemCategory",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":1,\r\n    \"category\": \"new category of item\",\r\n    \"contractAddress\":\"{{stock-contract-address}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/stock/UpdateItemCategory",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"stock",
+						"UpdateItemCategory"
+					]
+				},
+				"description": "This is a post request which allows you to update the category of an item."
+			},
+			"response": [
+				{
+					"name": "UpdateItemCategory",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"category\": \"new category of item\",\r\n    \"contractAddress\": \"{{stock-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/stock/UpdateItemCategory",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stock",
+								"UpdateItemCategory"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:80db7c4e-3522-4edf-964f-2157fe925c09"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=183f2ba13604fc2a7264b82924c56ebb1396782a26bfb46d9ef785631c762248;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-326?sv=2018-03-28&sr=b&sig=3mHkYOlMGOuWI61nodGkU9EuE4ql%2Fp9VXzBo%2FKCfaWo%3D&se=2020-10-10T17%3A51%3A41Z&sp=r&traceId=8bed76cc43f94ed9ae83815aba487dc8"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:51:41 GMT"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "UpdateItemDescription",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":3,\r\n    \"description\": \"newDescription\",\r\n    \"contractAddress\": \"{{stock-contract-address}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/stock/UpdateItemDescription",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"stock",
+						"UpdateItemDescription"
+					]
+				},
+				"description": "This is a post request which allows you to update the description of an item."
+			},
+			"response": [
+				{
+					"name": "UpdateItemDescription",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\":3,\r\n        \"description\": \"newDescription\",\r\n        \"contractAddress\":  \"{{stock-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/stock/UpdateItemDescription",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stock",
+								"UpdateItemDescription"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:80db7c4e-3522-4edf-964f-2157fe925c09"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=183f2ba13604fc2a7264b82924c56ebb1396782a26bfb46d9ef785631c762248;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-322?sv=2018-03-28&sr=b&sig=Mpaz9te6W4AkKMYxvSU0Wi1mS5dBh%2FqCvweKqnOch3o%3D&se=2020-10-10T17%3A48%3A10Z&sp=r&traceId=be05a7d65cbc4a94946dc57b7e0ab45c"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:48:10 GMT"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "UpdateItemName",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Ocp-Apim-Subscription-Key",
+						"type": "text",
+						"value": "{{Ocp-Apim-Subscription-Key}}"
+					},
+					{
+						"key": "Ocp-Apim-Trace",
+						"type": "text",
+						"value": "true"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\":3,\r\n    \"name\":\"newName\",\r\n    \"contractAddress\":\"{{stock-contract-address}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{base_url}}/stock/UpdateItemName",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"stock",
+						"UpdateItemName"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": "",
+							"disabled": true
+						}
+					]
+				},
+				"description": "This is a post request which allows you to update the name of an item."
+			},
+			"response": [
+				{
+					"name": "UpdateItemName",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Ocp-Apim-Subscription-Key",
+								"type": "text",
+								"value": "{{Ocp-Apim-Subscription-Key}}"
+							},
+							{
+								"key": "Ocp-Apim-Trace",
+								"type": "text",
+								"value": "true"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":3,\r\n    \"name\":\"newName\",\r\n    \"contractAddress\": \"{{stock-contract-address}}\"\r\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/stock/UpdateItemName",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"stock",
+								"UpdateItemName"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "plain",
+					"header": [
+						{
+							"key": "Content-Length",
+							"value": "0"
+						},
+						{
+							"key": "Request-Context",
+							"value": "appId=cid-v1:80db7c4e-3522-4edf-964f-2157fe925c09"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=03a18c0e8802a5207ae5910b39f47675eb1a5c5c244f47922c8c1499b95e1f27;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Set-Cookie",
+							"value": "ARRAffinity=183f2ba13604fc2a7264b82924c56ebb1396782a26bfb46d9ef785631c762248;Path=/;HttpOnly;Domain=stockcontractapi.azurewebsites.net"
+						},
+						{
+							"key": "Ocp-Apim-Trace-Location",
+							"value": "https://apimst24cjug2y3l9s1nebbd.blob.core.windows.net/apiinspectorcontainer/KOyOcQgQG7JhC6jzLNhnTA2-324?sv=2018-03-28&sr=b&sig=HzNyBfH1NAKBsfTb5ma5n1rng6BQBQNenqNgcgDdcHI%3D&se=2020-10-10T17%3A49%3A28Z&sp=r&traceId=e21e60d63f484ee3b72280ac5a3551a3"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Oct 2020 17:49:28 GMT"
+						}
+					],
+					"cookie": [],
+					"body": ""
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "83f4969c-cb1e-4ca1-85fc-991bdda87b32",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "ead878c2-f363-40ba-b91d-d3edd66a9ced",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "eb67f9b0-c10a-4f71-a6a6-7714a73ba359",
+			"key": "base_url",
+			"value": "url",
+			"type": "string"
+		},
+		{
+			"id": "c1d16704-101f-4a5f-882f-cd205dda7659",
+			"key": "Ocp-Apim-Subscription-Key",
+			"value": "subscription key",
+			"type": "string"
+		},
+		{
+			"id": "2e3e1102-e6ee-4bd7-a416-b20c9e933a3e",
+			"key": "stock-contract-address",
+			"value": "stock contract address",
+			"type": "string"
+		}
+	]
+}

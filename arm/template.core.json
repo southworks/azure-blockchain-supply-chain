@@ -1,0 +1,721 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "appName": {
+            "type": "string",
+            "defaultValue": "[concat('fnapp-', uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "The name of the function app that you wish to create."
+            }
+        },
+        "storageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "allowedValues": [
+                "Standard_LRS",
+                "Standard_GRS",
+                "Standard_RAGRS"
+            ],
+            "metadata": {
+                "description": "Storage Account type"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
+        },
+        "memberName": {
+            "defaultValue": "[concat('member', uniqueString(resourceGroup().id))]",
+            "type": "String"
+        },
+        "consortiumName": {
+            "type": "String",
+            "defaultValue": "[concat('consortium', uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "Consortium name. The new consortium name must be unique."
+            }
+        },
+        "memberPassword": {
+            "type": "secureString",
+            "defaultValue": "memberP@$$w0rd",
+            "metadata": {
+                "description": "The password for the member's default transaction node. Use the password for basic authentication when connecting to blockchain member's default transaction node public endpoint. The password must have 3 of the following: 1 lower case character, 1 upper case character, 1 number, and 1 special character that is not '#', '`', '*', '\"', ''', '-', '%',' ' or ';'."
+            }
+        },
+        "consortiumManagementAccountPassword": {
+            "type": "secureString",
+            "defaultValue": "consortiumP@$$w0rd",
+            "metadata": {
+                "description": "The consortium management account password is used to encrypt the private key for the Ethereum account that is created for your member. You use the member account and member account password for consortium management. The password must have 3 of the following: 1 lower case character, 1 upper case character, 1 number, and 1 special character that is not '#', '`', '*', '\"', ''', '-', '%',' ' or ';'."
+            }
+        },
+        "apimPublisherEmail": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "The email address of the owner of the service"
+            }
+        },
+        "apimPublisherName": {
+            "type": "string",
+            "minLength": 1,
+            "metadata": {
+                "description": "The name of the owner of the service"
+            }
+        },
+        "accountName": {
+            "type": "string",
+            "defaultValue": "[concat('db-', uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "Cosmos DB account name, max length 44 characters"
+            }
+        },
+        "primaryRegion": {
+            "type": "string",
+            "defaultValue": "eastus",
+            "metadata": {
+                "description": "The primary replica region for the Cosmos DB account."
+            }
+        },
+        "secondaryRegion": {
+            "type": "string",
+            "defaultValue": "westus",
+            "metadata": {
+                "description": "The secondary replica region for the Cosmos DB account."
+            }
+        },
+        "defaultConsistencyLevel": {
+            "type": "string",
+            "defaultValue": "Session",
+            "allowedValues": [
+                "Eventual",
+                "ConsistentPrefix",
+                "Session",
+                "BoundedStaleness",
+                "Strong"
+            ],
+            "metadata": {
+                "description": "The default consistency level of the Cosmos DB account."
+            }
+        },
+        "maxStalenessPrefix": {
+            "type": "int",
+            "defaultValue": 100000,
+            "minValue": 10,
+            "maxValue": 2147483647,
+            "metadata": {
+                "description": "Max stale requests. Required for BoundedStaleness. Valid ranges, Single Region: 10 to 1000000. Multi Region: 100000 to 1000000."
+            }
+        },
+        "maxIntervalInSeconds": {
+            "type": "int",
+            "defaultValue": 300,
+            "minValue": 5,
+            "maxValue": 86400,
+            "metadata": {
+                "description": "Max lag time (minutes). Required for BoundedStaleness. Valid ranges, Single Region: 5 to 84600. Multi Region: 300 to 86400."
+            }
+        },
+        "automaticFailover": {
+            "type": "bool",
+            "defaultValue": true,
+            "allowedValues": [
+                true,
+                false
+            ],
+            "metadata": {
+                "description": "Enable automatic failover for regions"
+            }
+        },
+        "databaseName": {
+            "type": "string",
+            "defaultValue": "supplychaindb",
+            "metadata": {
+                "description": "The name for the database"
+            }
+        },
+        "consumerContainerName": {
+            "type": "string",
+            "defaultValue": "consumer",
+            "metadata": {
+                "description": "The name for the container"
+            }
+        },
+        "walletsContainerName": {
+            "type": "string",
+            "defaultValue": "wallets",
+            "metadata": {
+                "description": "The name for the container"
+            }
+        },
+        "messagesContainerName": {
+            "type": "string",
+            "defaultValue": "messages",
+            "metadata": {
+                "description": "The name for the container"
+            }
+        },
+        "throughput": {
+            "type": "int",
+            "defaultValue": 400,
+            "minValue": 400,
+            "maxValue": 1000000,
+            "metadata": {
+                "description": "The throughput for the container"
+            }
+        }
+    },
+    "variables": {
+        "retailerFunctionAppName": "[concat(parameters('appName'), 'retailer')]",
+        "retailerHostingPlanName": "[concat(parameters('appName'), 'retailer')]",
+        "retailerApplicationInsightsName": "[concat(parameters('appName'), 'retailer')]",
+        "stockFunctionAppName": "[concat(parameters('appName'), 'stock')]",
+        "stockHostingPlanName": "[concat(parameters('appName'), 'stock')]",
+        "stockApplicationInsightsName": "[concat(parameters('appName'), 'stock')]",
+        "consumerFunctionAppName": "[concat(parameters('appName'), 'consumer')]",
+        "consumerHostingPlanName": "[concat(parameters('appName'), 'consumer')]",
+        "consumerApplicationInsightsName": "[concat(parameters('appName'), 'consumer')]",
+        "storageAccountName": "[concat(uniquestring(resourceGroup().id), 'azfunctions')]",
+        "functionWorkerRuntime": "dotnet",
+        "insightsLocation": {
+            "AzureCloud": "eastus",
+            "AzureUSGovernment": "usgovvirginia"
+        },
+        "apiManagementServiceName": "[concat('apiservice', uniqueString(resourceGroup().id))]",
+        "accountName": "[toLower(parameters('accountName'))]",
+        "consistencyPolicy": {
+            "Eventual": {
+                "defaultConsistencyLevel": "Eventual"
+            },
+            "ConsistentPrefix": {
+                "defaultConsistencyLevel": "ConsistentPrefix"
+            },
+            "Session": {
+                "defaultConsistencyLevel": "Session"
+            },
+            "BoundedStaleness": {
+                "defaultConsistencyLevel": "BoundedStaleness",
+                "maxStalenessPrefix": "[parameters('maxStalenessPrefix')]",
+                "maxIntervalInSeconds": "[parameters('maxIntervalInSeconds')]"
+            },
+            "Strong": {
+                "defaultConsistencyLevel": "Strong"
+            }
+        },
+        "locations": [
+            {
+                "locationName": "[parameters('primaryRegion')]",
+                "failoverPriority": 0,
+                "isZoneRedundant": false
+            },
+            {
+                "locationName": "[parameters('secondaryRegion')]",
+                "failoverPriority": 1,
+                "isZoneRedundant": false
+            }
+        ],
+        "cosmosDbApiVersion": "2020-04-01"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[variables('accountName')]",
+            "location": "[parameters('location')]",
+            "kind": "GlobalDocumentDB",
+            "properties": {
+                "consistencyPolicy": "[variables('consistencyPolicy')[parameters('defaultConsistencyLevel')]]",
+                "locations": "[variables('locations')]",
+                "databaseAccountOfferType": "Standard",
+                "enableAutomaticFailover": "[parameters('automaticFailover')]"
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(variables('accountName'), '/', parameters('databaseName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('accountName'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "[parameters('databaseName')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(variables('accountName'), '/', parameters('databaseName'), '/', parameters('consumerContainerName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', variables('accountName'), parameters('databaseName'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "[parameters('consumerContainerName')]",
+                    "partitionKey": {
+                        "paths": [
+                            "/id"
+                        ],
+                        "kind": "Hash"
+                    },
+                    "indexingPolicy": {
+                        "indexingMode": "consistent",
+                        "includedPaths": [
+                            {
+                                "path": "/*"
+                            }
+                        ]
+                    },
+                    "defaultTtl": 86400,
+                    "uniqueKeyPolicy": {
+                        "uniqueKeys": [
+                            {
+                                "paths": [
+                                    "/Email"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "options": {
+                    "throughput": "[parameters('throughput')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(variables('accountName'), '/', parameters('databaseName'), '/', parameters('walletsContainerName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', variables('accountName'), parameters('databaseName'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "[parameters('walletsContainerName')]",
+                    "partitionKey": {
+                        "paths": [
+                            "/id"
+                        ],
+                        "kind": "Hash"
+                    },
+                    "indexingPolicy": {
+                        "indexingMode": "consistent",
+                        "includedPaths": [
+                            {
+                                "path": "/*"
+                            }
+                        ]
+                    },
+                    "defaultTtl": 86400,
+                    "uniqueKeyPolicy": {
+                        "uniqueKeys": [
+                            {
+                                "paths": [
+                                    "/UserProfileId"
+                                ]
+                            }
+                        ]
+                    }
+                },
+                "options": {
+                    "throughput": "[parameters('throughput')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+            "apiVersion": "2020-06-01-preview",
+            "name": "[concat(variables('accountName'), '/', parameters('databaseName'), '/', parameters('messagesContainerName'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', variables('accountName'), parameters('databaseName'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "[parameters('messagesContainerName')]",
+                    "partitionKey": {
+                        "paths": [
+                            "/id"
+                        ],
+                        "kind": "Hash"
+                    },
+                    "indexingPolicy": {
+                        "indexingMode": "consistent",
+                        "includedPaths": [
+                            {
+                                "path": "/*"
+                            }
+                        ]
+                    },
+                    "defaultTtl": 86400
+                },
+                "options": {
+                    "throughput": "[parameters('throughput')]"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-06-01",
+            "name": "[variables('storageAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "[parameters('storageAccountType')]"
+            },
+            "kind": "Storage"
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('retailerHostingPlanName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic"
+            },
+            "properties": {
+                "name": "[variables('retailerHostingPlanName')]",
+                "computeMode": "Dynamic"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('retailerFunctionAppName')]",
+            "location": "[parameters('location')]",
+            "kind": "functionapp",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('retailerHostingPlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('accountName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('retailerHostingPlanName'))]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';EndpointSuffix=', environment().suffixes.storage, ';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';EndpointSuffix=', environment().suffixes.storage, ';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[toLower(variables('retailerFunctionAppName'))]"
+                        },
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~2"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "~10"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('microsoft.insights/components', variables('retailerApplicationInsightsName')), '2020-02-02-preview').InstrumentationKey]"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "[variables('functionWorkerRuntime')]"
+                        },
+                        {
+                            "name": "RPC_ENDPOINT",
+                            "value": ""
+                        },
+                        {
+                            "name": "PRIVATE_KEY",
+                            "value": ""
+                        },
+                        {
+                            "name": "COSMOS_DB_URI",
+                            "value": "[concat('https://',variables('accountName'),'.documents.azure.com:443/')]"
+                        },
+                        {
+                            "name": "COSMOS_DB_PRIMARY_KEY",
+                            "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('accountName')),variables('cosmosDbApiVersion')).primaryMasterKey]"
+                        },
+                        {
+                            "name": "DATABASE_ID",
+                            "value": "[parameters('databaseName')]"
+                        },
+                        {
+                            "name": "USER_CONTAINER_ID",
+                            "value": "[parameters('consumerContainerName')]"
+                        },
+                        {
+                            "name": "WALLET_CONTAINER_ID",
+                            "value": "[parameters('walletsContainerName')]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "microsoft.insights/components",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[variables('retailerApplicationInsightsName')]",
+            "location": "[variables('insightsLocation')[environment().name]]",
+            "tags": {
+                "[concat('hidden-link:', resourceId('Microsoft.Web/sites', variables('retailerApplicationInsightsName')))]": "Resource"
+            },
+            "properties": {
+                "ApplicationId": "[variables('retailerApplicationInsightsName')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('stockHostingPlanName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic"
+            },
+            "properties": {
+                "name": "[variables('stockHostingPlanName')]",
+                "computeMode": "Dynamic"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('stockFunctionAppName')]",
+            "location": "[parameters('location')]",
+            "kind": "functionapp",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('stockHostingPlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('accountName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('stockHostingPlanName'))]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';EndpointSuffix=', environment().suffixes.storage, ';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';EndpointSuffix=', environment().suffixes.storage, ';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[toLower(variables('stockFunctionAppName'))]"
+                        },
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~2"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "~10"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('microsoft.insights/components', variables('stockApplicationInsightsName')), '2020-02-02-preview').InstrumentationKey]"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "[variables('functionWorkerRuntime')]"
+                        },
+                        {
+                            "name": "RPC_ENDPOINT",
+                            "value": ""
+                        },
+                        {
+                            "name": "PRIVATE_KEY",
+                            "value": ""
+                        },
+                        {
+                            "name": "COSMOS_DB_URI",
+                            "value": "[concat('https://',variables('accountName'),'.documents.azure.com:443/')]"
+                        },
+                        {
+                            "name": "COSMOS_DB_PRIMARY_KEY",
+                            "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('accountName')),variables('cosmosDbApiVersion')).primaryMasterKey]"
+                        },
+                        {
+                            "name": "DATABASE_ID",
+                            "value": "[parameters('databaseName')]"
+                        },
+                        {
+                            "name": "USER_CONTAINER_ID",
+                            "value": "[parameters('consumerContainerName')]"
+                        },
+                        {
+                            "name": "WALLET_CONTAINER_ID",
+                            "value": "[parameters('walletsContainerName')]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "microsoft.insights/components",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[variables('stockApplicationInsightsName')]",
+            "location": "[variables('insightsLocation')[environment().name]]",
+            "tags": {
+                "[concat('hidden-link:', resourceId('Microsoft.Web/sites', variables('stockApplicationInsightsName')))]": "Resource"
+            },
+            "properties": {
+                "ApplicationId": "[variables('stockApplicationInsightsName')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('consumerHostingPlanName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Y1",
+                "tier": "Dynamic"
+            },
+            "properties": {
+                "name": "[variables('consumerHostingPlanName')]",
+                "computeMode": "Dynamic"
+            }
+        },
+        {
+            "type": "Microsoft.Web/sites",
+            "apiVersion": "2020-06-01",
+            "name": "[variables('consumerFunctionAppName')]",
+            "location": "[parameters('location')]",
+            "kind": "functionapp",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('consumerHostingPlanName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', variables('accountName'))]"
+            ],
+            "properties": {
+                "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('consumerHostingPlanName'))]",
+                "siteConfig": {
+                    "appSettings": [
+                        {
+                            "name": "AzureWebJobsStorage",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';EndpointSuffix=', environment().suffixes.storage, ';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTAZUREFILECONNECTIONSTRING",
+                            "value": "[concat('DefaultEndpointsProtocol=https;AccountName=', variables('storageAccountName'), ';EndpointSuffix=', environment().suffixes.storage, ';AccountKey=',listKeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName')), '2019-06-01').keys[0].value)]"
+                        },
+                        {
+                            "name": "WEBSITE_CONTENTSHARE",
+                            "value": "[toLower(variables('consumerFunctionAppName'))]"
+                        },
+                        {
+                            "name": "FUNCTIONS_EXTENSION_VERSION",
+                            "value": "~2"
+                        },
+                        {
+                            "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                            "value": "~10"
+                        },
+                        {
+                            "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
+                            "value": "[reference(resourceId('microsoft.insights/components', variables('consumerApplicationInsightsName')), '2020-02-02-preview').InstrumentationKey]"
+                        },
+                        {
+                            "name": "FUNCTIONS_WORKER_RUNTIME",
+                            "value": "[variables('functionWorkerRuntime')]"
+                        },
+                        {
+                            "name": "RPC_ENDPOINT",
+                            "value": ""
+                        },
+                        {
+                            "name": "PRIVATE_KEY",
+                            "value": ""
+                        },
+                        {
+                            "name": "COSMOS_DB_URI",
+                            "value": "[concat('https://',variables('accountName'),'.documents.azure.com:443/')]"
+                        },
+                        {
+                            "name": "COSMOS_DB_PRIMARY_KEY",
+                            "value": "[listKeys(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('accountName')),variables('cosmosDbApiVersion')).primaryMasterKey]"
+                        },
+                        {
+                            "name": "DATABASE_ID",
+                            "value": "[parameters('databaseName')]"
+                        },
+                        {
+                            "name": "USER_CONTAINER_ID",
+                            "value": "[parameters('consumerContainerName')]"
+                        },
+                        {
+                            "name": "WALLET_CONTAINER_ID",
+                            "value": "[parameters('walletsContainerName')]"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "microsoft.insights/components",
+            "apiVersion": "2020-02-02-preview",
+            "name": "[variables('consumerApplicationInsightsName')]",
+            "location": "[variables('insightsLocation')[environment().name]]",
+            "tags": {
+                "[concat('hidden-link:', resourceId('Microsoft.Web/sites', variables('consumerApplicationInsightsName')))]": "Resource"
+            },
+            "properties": {
+                "ApplicationId": "[variables('consumerApplicationInsightsName')]",
+                "Request_Source": "IbizaWebAppExtensionCreate"
+            }
+        },
+        {
+            "type": "Microsoft.Blockchain/blockchainMembers",
+            "apiVersion": "2018-06-01-preview",
+            "name": "[parameters('memberName')]",
+            "location": "eastus",
+            "sku": {
+                "name": "B0",
+                "tier": "Basic"
+            },
+            "kind": "Quorum",
+            "properties": {
+                "validatorNodesSku": {
+                    "capacity": 1
+                },
+                "consortiumRole": "ADMIN",
+                "consortiumMemberDisplayName": "[parameters('memberName')]",
+                "password": "[parameters('memberPassword')]",
+                "consortium": "[parameters('consortiumName')]",
+                "consortiumManagementAccountPassword": "[parameters('consortiumManagementAccountPassword')]",
+                "firewallRules": [
+                    {
+                        "ruleName": "AllowAll",
+                        "startIpAddress": "0.0.0.0",
+                        "endIpAddress": "255.255.255.255"
+                    }
+                ],
+                "protocol": "Quorum"
+            }
+        },
+        {
+            "apiVersion": "2019-12-01",
+            "name": "[variables('apiManagementServiceName')]",
+            "type": "Microsoft.ApiManagement/service",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Developer",
+                "capacity": 1
+            },
+            "properties": {
+                "publisherEmail": "[parameters('apimPublisherEmail')]",
+                "publisherName": "[parameters('apimPublisherName')]"
+            }
+        }
+    ]
+}
