@@ -109,7 +109,7 @@ To deploy the smart contracts we will need:
 - Also, you will need to have an account with the mnemonic (check our guide about [how to get a menmonic](#how-to-create-a-mnemonic-passphrase)) in the file mnemonic.env. The mnemonic is a twelve-word seed for your private key. It can be generated automatically by **Blockchain Development Kit for Ethereum**.
 
 In the `truffle-config.js` file is the network setup, which is something like that:
-```json 
+``` 
 abs_consortium: {
     network_id: "*",
     gasPrice: 0,
