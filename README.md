@@ -1,3 +1,5 @@
+The reference implementation contained in this repository complements the following [article](https://medium.com/southworks/smart-contracts-in-the-retail-industry-59cb4c985ec1).
+
 # How to run our solution
 
 ## Requirements
